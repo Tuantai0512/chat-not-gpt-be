@@ -15,7 +15,8 @@ const corsOptions ={
 // middleware that is specific to this router
 const initAPI = (app) => {
     // define the home page route
-    router.post('/login', APIControler.handleLogin)
+    router.post('/login', APIControler.handleLogin);
+    router.get('/users', APIControler.handleGetAllUser)
     return app.use('/api/v1', cors(corsOptions) ,router)
 }
 

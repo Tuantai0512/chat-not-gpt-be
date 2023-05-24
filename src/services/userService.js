@@ -34,8 +34,8 @@ let handleUserLogin = (username, password) => {
                 }
             } else {
                 //Return error
-                userData.errCode = 1;
-                userData.message = `Your's username isn't exist in your system. Plz try other username!`;
+                userData.errCode = 2;
+                userData.message = `User's not found`;
                 resolve(userData);
             }
         } catch (e) {
@@ -61,6 +61,28 @@ let checkUsername = (username) => {
     })
 }
 
+let getAllUser = (userId) => {
+    return new Promise((resolve, reject) => {
+        try{
+            let users = '';
+            if(userId === 'ALL'){
+                users = db.User.findAll({
+                    attributes: { exclude: ['password'] }
+                })
+            }else if(userId && userId !== 'ALL'){
+                users = db.User.findOne({
+                    where: { id: userId },
+                    attributes: { exclude: ['password'] }
+                })
+            }
+            resolve(users)
+        }catch(e){
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
-    handleUserLogin: handleUserLogin
+    handleUserLogin: handleUserLogin,
+    getAllUser: getAllUser
 }

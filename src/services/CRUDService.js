@@ -2,7 +2,7 @@ const db = require('../models/index')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-let createNewUser = async(data) => {
+/* let createNewUser = async(data) => {
     return new Promise(async(resolve, reject) => {
         try{
             let hashPasswordFromBcript = await hashUserPassword(data.password);
@@ -13,7 +13,7 @@ let createNewUser = async(data) => {
             reject(e)
         }
     })
-}
+} */
 
 let hashUserPassword = (password) => {
     return new Promise(async (resolve, reject) => {
@@ -45,8 +45,9 @@ let getUserById = (id) => {
 
 
 
-module.exports = {
-    createNewUser: createNewUser,
+module.exports = {/* 
+    createNewUser: createNewUser, */
     getUserById: getUserById,
-    getAllUser: getAllUser
+    getAllUser: getAllUser,
+    hashUserPassword: hashUserPassword
 }

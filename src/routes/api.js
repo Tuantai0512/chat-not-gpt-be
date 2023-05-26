@@ -16,7 +16,10 @@ const corsOptions ={
 const initAPI = (app) => {
     // define the home page route
     router.post('/login', APIControler.handleLogin);
-    router.get('/users', APIControler.handleGetAllUser)
+    router.get('/users', APIControler.handleGetAllUser);
+    router.post('/create-new-user', APIControler.handleCreateNewUser);
+    router.put('/edit-user', APIControler.handleEditUser);
+    router.delete('/delete-user', APIControler.handleDeleteUser);
     return app.use('/api/v1', cors(corsOptions) ,router)
 }
 

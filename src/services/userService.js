@@ -1,6 +1,7 @@
 const db = require('../models/index')
 const bcrypt = require('bcrypt');
 const { hashUserPassword } = require('./CRUDService')
+const { createJWT } = require('../middlewares/auth')
 
 let handleUserLogin = (username, password) => {
     return new Promise(async (resolve, reject) => {
@@ -22,6 +23,7 @@ let handleUserLogin = (username, password) => {
                         userData.message = `Okay!`;
                         delete user.password;
                         userData.user = user;
+                        userData.token = createJWT(user);
                         resolve(userData)
                     } else {
                         userData.errCode = 3;

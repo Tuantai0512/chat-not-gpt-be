@@ -1,7 +1,8 @@
 const CRUDService = require('../services/CRUDService');
 const CRUDServices = require('../services/CRUDService');
 const userService = require('../services/userService');
-const userServices = require('../services/userService')
+const userServices = require('../services/userService');
+const { verifyJWT } = require('../middlewares/auth')
 
 let handleLogin = async (req, res) => {
     let username = req.body.username;
@@ -20,7 +21,8 @@ let handleLogin = async (req, res) => {
     return res.status(200).json({
         errCode: userData.errCode,
         message: userData.message,
-        user: userData.user
+        user: userData.user,
+        token: userData.token
     });
 }
 
@@ -66,10 +68,18 @@ let handleDeleteUser = async(req, res) => {
     return res.status(200).json(message)
 }
 
+let handleAuth = async(req, res) => {
+    let token = req.body.token;
+    let decodedData = await verifyJWT(token);
+    console.log(decodedData);
+    return res.status(200).json(decodedData);
+}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUser: handleGetAllUser,
     handleCreateNewUser: handleCreateNewUser,
     handleEditUser: handleEditUser,
-    handleDeleteUser: handleDeleteUser
+    handleDeleteUser: handleDeleteUser,
+    handleAuth: handleAuth
 }

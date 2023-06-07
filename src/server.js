@@ -1,7 +1,8 @@
 require('dotenv').config()
 const express = require('express')
 const app = express();
-const bp = require('body-parser')
+const bp = require('body-parser');
+const JWTToken = require('./middlewares/auth');
 
 var path = require('path');
 const port = process.env.PORT || 8888

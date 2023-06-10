@@ -57,13 +57,13 @@ let handleEditUser = async(req,res) => {
 }
 
 let handleDeleteUser = async(req, res) => {
-    if(!req.body.id){
+    if(!req.query.id){
         return res.status(200).json({
             errCode: 1,
             message: 'Missing inputs parameters',
         })
     }
-    let message = await userService.deleteUser(req.body.id);
+    let message = await userService.deleteUser(req.query.id);
     console.log(message)
     return res.status(200).json(message)
 }
@@ -71,7 +71,6 @@ let handleDeleteUser = async(req, res) => {
 let handleAuth = async(req, res) => {
     let token = req.body.token;
     let decodedData = await verifyJWT(token);
-    console.log(decodedData);
     return res.status(200).json(decodedData);
 }
 

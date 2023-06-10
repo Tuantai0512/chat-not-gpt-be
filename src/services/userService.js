@@ -100,8 +100,8 @@ let createNewUser = (data) => {
                 await db.User.create({
                     username: data.username,
                     password: hashPasswordFromBcript,
-                    firstName: data.firstName,
-                    lastName: data.lastName,
+                    firstName: data.username,
+                    lastName: '',
                     email: data.email,
                     phoneNumber: data.phoneNumber,
                     gender: data.gender === '1' ? true : false

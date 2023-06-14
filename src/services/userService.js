@@ -159,13 +159,16 @@ let updateUser = (data) => {
                 if (user) {
                     user.firstName = data.firstName;
                     user.lastName = data.lastName;
-
+                    user.email = data.email;
+                    user.phoneNumber = data.phoneNumber;
+                    user.gender = data.gender;
                     await user.save();
                     resolve({
                         errCode: 0,
-                        message: 'Okay! User is updated.'
+                        message: 'Okay! User is updated.',
+                        data: user
                     })
-                } else {
+                } else { 
                     resolve({
                         errCode: 3,
                         message: 'User not found.'

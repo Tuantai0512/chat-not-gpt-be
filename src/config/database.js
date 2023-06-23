@@ -1,6 +1,11 @@
 require('dotenv').config()
 /* const mysql = require('mysql2'); */
 const { Sequelize } = require('sequelize');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://127.0.0.1:27017')
+  .then(() => console.log('Connected!'))
+  .catch(() => console.log('Failed'));
 
 // create the connection to database
 /* const connection = mysql.createPool({

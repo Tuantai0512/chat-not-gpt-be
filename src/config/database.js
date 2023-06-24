@@ -3,9 +3,11 @@ require('dotenv').config()
 const { Sequelize } = require('sequelize');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017')
+mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@127.0.0.1:27017`)
   .then(() => console.log('Connected!'))
   .catch(() => console.log('Failed'));
+
+
 
 // create the connection to database
 /* const connection = mysql.createPool({

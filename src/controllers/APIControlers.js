@@ -33,7 +33,6 @@ let handleGetAllUser = async (req, res) => {
         return res.status(200).json({
             errCode: 1,
             message: 'Missing inputs parameters',
-            users: users,
         })
     }else{
         return res.status(200).json({

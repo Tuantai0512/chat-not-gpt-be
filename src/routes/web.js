@@ -10,7 +10,7 @@ router.use((req, res, next) => {
 router.get('/', async(req, res) => {
   try{
     let data = await db.User.findAll();
-    res.send({ data: data })
+    res.send('Weicome to chat not gpt server!')
   }catch(e){
     console.log(e)
   }

@@ -143,7 +143,7 @@ let deleteUser = (userId) => {
     })
 }
 
-let updateUser = (data) => {
+let updateUser = (data, image) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!data.id) {
@@ -162,11 +162,11 @@ let updateUser = (data) => {
                     user.email = data.email;
                     user.phoneNumber = data.phoneNumber;
                     user.gender = data.gender;
+                    user.Avatar = image.filename;
                     await user.save();
                     resolve({
                         errCode: 0,
                         message: 'Okay! User is updated.',
-                        data: user
                     })
                 } else { 
                     resolve({

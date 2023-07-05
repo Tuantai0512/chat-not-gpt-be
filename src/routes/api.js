@@ -5,12 +5,27 @@ const APIControler = require('../controllers/APIControlers')
 const conversationControler = require('../controllers/conversationControler')
 const messageControler = require('../controllers/messageControler')
 var cors = require('cors')
+const multer = require('multer');
+const path = require('path');
 
 const corsOptions ={
     origin:'http://localhost:3000', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
+
+//handle store avatar user
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './src/public/images')
+    },
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
+    }
+  })
+  
+  const upload = multer({ storage: storage })
 
 
 
@@ -21,7 +36,7 @@ const initAPI = (app) => {
     router.post('/auth',APIControler.handleAuth);
     router.get('/users', APIControler.handleGetAllUser);
     router.post('/create-new-user', APIControler.handleCreateNewUser);
-    router.put('/edit-user', APIControler.handleEditUser);
+    router.put('/edit-user', upload.single('image') ,APIControler.handleEditUser);
     router.delete('/delete-user', APIControler.handleDeleteUser);
 
     // API Conversation handle

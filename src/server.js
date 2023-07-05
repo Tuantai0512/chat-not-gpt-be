@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express();
 const bp = require('body-parser');
-const JWTToken = require('./middlewares/auth');
+
 
 var path = require('path');
 const port = process.env.PORT || 8888
@@ -24,6 +24,7 @@ app.use(bp.urlencoded({ extended: true }))
 
 connectDB();
 initAPI(app);
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 

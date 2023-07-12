@@ -38,6 +38,7 @@ const initAPI = (app) => {
     router.post('/create-new-user', APIControler.handleCreateNewUser);
     router.put('/edit-user', upload.single('image') ,APIControler.handleEditUser);
     router.delete('/delete-user', APIControler.handleDeleteUser);
+    router.get('/search-users/:search_query', APIControler.handleSearchUsers);
 
     // API Conversation handle
     router.post('/conversation',conversationControler.handleCreateNewConversation);

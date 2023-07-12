@@ -2,6 +2,7 @@ const db = require('../models/index')
 const bcrypt = require('bcrypt');
 const { hashUserPassword } = require('./CRUDService')
 const { createJWT } = require('../middlewares/auth')
+const { Op } = require("sequelize");
 
 let handleUserLogin = (username, password) => {
     return new Promise(async (resolve, reject) => {
@@ -151,7 +152,7 @@ let updateUser = (data, image) => {
                     errCode: 1,
                     message: 'Missing inputs parameters',
                 })
-            }else{
+            } else {
                 let user = await db.User.findOne({
                     where: { id: data.id },
                     raw: false
@@ -168,7 +169,7 @@ let updateUser = (data, image) => {
                         errCode: 0,
                         message: 'Okay! User is updated.',
                     })
-                } else { 
+                } else {
                     resolve({
                         errCode: 3,
                         message: 'User not found.'
@@ -181,10 +182,31 @@ let updateUser = (data, image) => {
     })
 }
 
+let searchUser = (query) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            users = db.User.findAll({
+                where: {
+                    [Op.or]: [
+                        { firstName: { [Op.substring]: query } },
+                        { lastName: { [Op.substring]: query } },
+                        { phoneNumber: { [Op.substring]: query } }
+                    ]
+                },
+                attributes: { exclude: ['password'] }
+            })
+            resolve(users);
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUser: getAllUser,
     createNewUser: createNewUser,
     deleteUser: deleteUser,
-    updateUser: updateUser
+    updateUser: updateUser,
+    searchUser: searchUser
 }

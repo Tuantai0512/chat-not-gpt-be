@@ -74,11 +74,18 @@ let handleAuth = async(req, res) => {
     return res.status(200).json(decodedData);
 }
 
+let handleSearchUsers = async(req, res) => {
+    let searchQuery = req.params.search_query;
+    let users = await userService.searchUser(searchQuery);
+    return res.status(200).json(users);
+}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUser: handleGetAllUser,
     handleCreateNewUser: handleCreateNewUser,
     handleEditUser: handleEditUser,
     handleDeleteUser: handleDeleteUser,
-    handleAuth: handleAuth
+    handleAuth: handleAuth,
+    handleSearchUsers: handleSearchUsers
 }

@@ -3,7 +3,7 @@ require('dotenv').config()
 const { Sequelize } = require('sequelize');
 const mongoose = require('mongoose');
 
-mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@127.0.0.1:27017`)
+mongoose.connect(`mongodb+srv://${process.env.DB_USER_MONGO}:${process.env.DB_MONGO_PASSWORD}@chatnotgptdb.9ft3rmi.mongodb.net/`)
   .then(() => console.log('Connected!'))
   .catch(() => console.log('Failed'));
 
@@ -23,11 +23,24 @@ mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@12
   queueLimit: 0
 }); */
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+const sequelize = new Sequelize(process.env.DB_DATABASE_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
-  dialect: 'mysql', /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
   port: process.env.DB_PORT,
-  logging: false
+  dialect: process.env.DB_DIALECT,
+  logging: false,
+  dialectOptions:
+    process.env.DB_SSL === 'true' ?
+      {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      } : {}
+  ,
+  query: {
+    "raw": true
+  },
+  timezone: "+07:00"
 });
 
 let connectDB = async () => {

@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 const db = require('../models/index')
@@ -9,7 +10,7 @@ const multer = require('multer');
 const path = require('path');
 
 const corsOptions ={
-    origin:'http://localhost:3000', 
+    origin:process.env.URL_REACT, 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
@@ -36,7 +37,8 @@ const initAPI = (app) => {
     router.post('/auth',APIControler.handleAuth);
     router.get('/users', APIControler.handleGetAllUser);
     router.post('/create-new-user', APIControler.handleCreateNewUser);
-    router.put('/edit-user', upload.single('image') ,APIControler.handleEditUser);
+    router.put('/edit-user',APIControler.handleEditUser);
+    router.put('/edit-avatar', upload.single('image') ,APIControler.handleEditAvatar);
     router.delete('/delete-user', APIControler.handleDeleteUser);
     router.get('/search-users/:search_query', APIControler.handleSearchUsers);
 

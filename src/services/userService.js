@@ -144,7 +144,7 @@ let deleteUser = (userId) => {
     })
 }
 
-let updateUser = (data, image) => {
+let updateUser = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!data.id) {
@@ -163,11 +163,43 @@ let updateUser = (data, image) => {
                     user.email = data.email;
                     user.phoneNumber = data.phoneNumber;
                     user.gender = data.gender;
-                    user.Avatar = image.filename;
                     await user.save();
                     resolve({
                         errCode: 0,
                         message: 'Okay! User is updated.',
+                    })
+                } else {
+                    resolve({
+                        errCode: 3,
+                        message: 'User not found.'
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let updateAvatar = (data, image) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.id) {
+                resolve({
+                    errCode: 1,
+                    message: 'Missing inputs parameters',
+                })
+            } else {
+                let user = await db.User.findOne({
+                    where: { id: data.id },
+                    raw: false
+                })
+                if (user) {
+                    user.Avatar = image.filename;
+                    await user.save();
+                    resolve({
+                        errCode: 0,
+                        message: 'Okay! Avatar user is updated.',
                     })
                 } else {
                     resolve({
@@ -208,5 +240,6 @@ module.exports = {
     createNewUser: createNewUser,
     deleteUser: deleteUser,
     updateUser: updateUser,
-    searchUser: searchUser
+    searchUser: searchUser,
+    updateAvatar: updateAvatar
 }

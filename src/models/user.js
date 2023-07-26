@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     Avatar: DataTypes.STRING,
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'Users',
   });
   return User;
 };

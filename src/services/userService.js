@@ -12,7 +12,7 @@ let handleUserLogin = (username, password) => {
             if (isExist) {
                 //User Already exist
 
-                let user = await db.User.findOne({
+                let user = await db.Users.findOne({
                     raw: true,
                     where: { username: username }
                 })
@@ -51,7 +51,7 @@ let handleUserLogin = (username, password) => {
 let checkUsername = (username) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let user = await db.User.findOne({
+            let user = await db.Users.findOne({
                 where: { username: username }
             })
             if (user) {
@@ -70,11 +70,11 @@ let getAllUser = (userId) => {
         try {
             let users = '';
             if (userId === 'ALL') {
-                users = db.User.findAll({
+                users = db.Users.findAll({
                     attributes: { exclude: ['password'] }
                 })
             } else if (userId && userId !== 'ALL') {
-                users = db.User.findOne({
+                users = db.Users.findOne({
                     where: { id: userId },
                     attributes: { exclude: ['password'] }
                 })
@@ -98,7 +98,7 @@ let createNewUser = (data) => {
                 })
             } else {
                 let hashPasswordFromBcript = await hashUserPassword(data.password);
-                await db.User.create({
+                await db.Users.create({
                     username: data.username,
                     password: hashPasswordFromBcript,
                     firstName: data.username,
@@ -121,7 +121,7 @@ let createNewUser = (data) => {
 let deleteUser = (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let user = await db.User.findOne({
+            let user = await db.Users.findOne({
                 where: { id: userId }
             })
             if (!user) {
@@ -130,7 +130,7 @@ let deleteUser = (userId) => {
                     message: 'Ops! User is not exist.'
                 })
             } else {
-                await db.User.destroy({
+                await db.Users.destroy({
                     where: { id: userId }
                 })
                 resolve({
@@ -153,7 +153,7 @@ let updateUser = (data) => {
                     message: 'Missing inputs parameters',
                 })
             } else {
-                let user = await db.User.findOne({
+                let user = await db.Users.findOne({
                     where: { id: data.id },
                     raw: false
                 })
@@ -190,7 +190,7 @@ let updateAvatar = (data, image) => {
                     message: 'Missing inputs parameters',
                 })
             } else {
-                let user = await db.User.findOne({
+                let user = await db.Users.findOne({
                     where: { id: data.id },
                     raw: false
                 })
@@ -217,7 +217,7 @@ let updateAvatar = (data, image) => {
 let searchUser = (query) => {
     return new Promise(async (resolve, reject) => {
         try {
-            users = db.User.findAll({
+            users = db.Users.findAll({
                 where: {
                     [Op.or]: [
                         { firstName: { [Op.substring]: query } },

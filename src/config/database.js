@@ -37,9 +37,6 @@ const sequelize = new Sequelize(process.env.DB_DATABASE_NAME, process.env.DB_USE
         }
       } : {}
   ,
-  query: {
-    "raw": true
-  },
   timezone: "+07:00"
 });
 

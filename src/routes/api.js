@@ -38,7 +38,7 @@ const initAPI = (app) => {
     router.get('/users', APIControler.handleGetAllUser);
     router.post('/create-new-user', APIControler.handleCreateNewUser);
     router.put('/edit-user',APIControler.handleEditUser);
-    router.put('/edit-avatar', upload.single('image') ,APIControler.handleEditAvatar);
+    router.put('/edit-avatar', cors(corsOptions) ,upload.single('image') ,APIControler.handleEditAvatar);
     router.delete('/delete-user', APIControler.handleDeleteUser);
     router.get('/search-users/:search_query', APIControler.handleSearchUsers);
 
